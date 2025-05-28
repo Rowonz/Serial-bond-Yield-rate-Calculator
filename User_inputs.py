@@ -12,4 +12,4 @@ def inputs_main(iteration):
     difference = inputs["acq_cost"] - inputs["face_val"]
     prm_disc = difference >= 0
     amort_details_data = {"prm_disc": prm_disc, "diff": difference}
-    main.main_looper(inputs, amort_details_data, iteration)
+    main.logic_core_heuristics(inputs, amort_details_data, iteration)  # not functioning as of right now, not all pos. args met
