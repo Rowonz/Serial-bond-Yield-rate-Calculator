@@ -3,21 +3,23 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import ttkbootstrap as ttk
+from ttkbootstrap import Style
 
 
 def program_starter():
     global entry_acquisition, entry_face_val, entry_inst, entry_nom
 
-    root = ttk.Window(themename='darkly')
-    root.title('Ronzki')
+    root = tk.Tk()
+    root.title("Ronzki")
+    Style('darkly')
 
-    root.photo_icon = ttk.PhotoImage(file='sticker_1.gif')
+    root.photo_icon = ttk.PhotoImage(file='bochi.png')
     root.iconphoto(True, root.photo_icon)
 
     mainframe = ttk.Frame(root, padding=20)
     mainframe.pack(expand=True, fill='both')
 
-    label = ttk.Label(mainframe, text='Yield Rate Calculator', font=('Gotham', 20, 'bold'))
+    label = ttk.Label(mainframe, text='Yield Calculator App', font=('Gotham', 20, 'bold'))
     label.pack(anchor='center', pady=10)
 
     entry_frame = ttk.Labelframe(mainframe, text="Input Fields", padding=10)
@@ -82,6 +84,7 @@ def delete_inputs():
     entry_face_val.delete(0, END)
     entry_inst.delete(0, END)
     entry_nom.delete(0, END)
+
 
 
 def create_tooltip(widget, text):
