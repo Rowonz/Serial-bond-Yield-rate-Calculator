@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import random
 a_interval = None
 b_interval = None
@@ -64,8 +65,13 @@ def a_b_assigner(acq_cost, to_check, percentage_used, iteration):
     global a_interval, b_interval
     assigner_variable = to_check - acq_cost
     if abs(assigner_variable) <= 1e-6:
-        print(f'Yield Rate of Serial Bond: {percentage_used}%, Assign_var value: {round(assigner_variable)}, '
-              f'Value calculated: {round(to_check, 0)}. It took {iteration} iterations')
+        messagebox.showinfo(
+            title="Yield Rate Found",
+            message=f"Yield Rate of Serial Bond: {percentage_used}%\n"
+                    f"Assign_var value: {round(assigner_variable)}\n"
+                    f"Value calculated: {round(to_check, 0)}\n"
+                    f"It took {iteration} iterations"
+        )
         return assigner_variable, iteration
     elif assigner_variable > 0:
         a_interval = percentage_used
