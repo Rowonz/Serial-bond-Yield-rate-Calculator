@@ -1,3 +1,5 @@
+import os
+import sys
 import User_inputs
 import tkinter as tk
 from tkinter import *
@@ -6,15 +8,31 @@ import ttkbootstrap as ttk
 from ttkbootstrap import Style
 
 
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
 def program_starter():
     global entry_acquisition, entry_face_val, entry_inst, entry_nom
 
     root = tk.Tk()
     root.title("Ronzki")
     Style('darkly')
+    try:
 
-    root.photo_icon = ttk.PhotoImage(file='bochi.png')
-    root.iconphoto(True, root.photo_icon)
+        img_path = resource_path('bochi.png')
+        root.photo_icon = ttk.PhotoImage(file=img_path)
+        root.iconphoto(True, root.photo_icon)
+
+    except Exception as e:
+        print(f"Error loading image: {e}")
+        error_label = tk.Label(root, text=f"Error loading bochi.png: {e}")
+        error_label.pack()
 
     mainframe = ttk.Frame(root, padding=20)
     mainframe.pack(expand=True, fill='both')
@@ -84,7 +102,6 @@ def delete_inputs():
     entry_face_val.delete(0, END)
     entry_inst.delete(0, END)
     entry_nom.delete(0, END)
-
 
 
 def create_tooltip(widget, text):

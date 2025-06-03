@@ -4,18 +4,25 @@ a_interval = None
 b_interval = None
 
 
-def main_looper(data, data_2, iteration, current_val=1):
-    while current_val > 1e-6:
+def main_looper(data, data_2, iteration, current_val=1, max_iter=1000):
+    global a_interval, b_interval
+
+    while iteration < max_iter and current_val > 1e-6:
         if a_interval is None or b_interval is None:
-            call_range_setter = range_setter((data["nom_rate"]), data_2)
+            call_range_setter = range_setter(data["nom_rate"], data_2)
         else:
             call_range_setter = bisector()
         result = function(data, call_range_setter)
         assigner_call, iteration = a_b_assigner(data["acq_cost"], result, call_range_setter, iteration)
         current_val = abs(assigner_call)
         iteration += 1
-        if current_val <= 1e-6:
-            break
+    if current_val > 1e-6:
+        a_interval = None
+        b_interval = None
+        messagebox.showinfo(
+            title="ERROR!",
+            message="Could not converge on value"
+        )
 
 
 def range_setter(rate, premium_discount):
@@ -65,6 +72,8 @@ def a_b_assigner(acq_cost, to_check, percentage_used, iteration):
     global a_interval, b_interval
     assigner_variable = to_check - acq_cost
     if abs(assigner_variable) <= 1e-6:
+        a_interval = None
+        b_interval = None
         messagebox.showinfo(
             title="Yield Rate Found",
             message=f"Yield Rate of Serial Bond: {percentage_used}%\n"
